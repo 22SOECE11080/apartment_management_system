@@ -6,7 +6,7 @@ const Home = () => {
   const [filterStatus, setFilterStatus] = useState("All");
 
   useEffect(() => {
-    fetch("http://localhost:4545/api/members/")
+    fetch("https://apartment-management-system-asf9.onrender.com/api/members/")
       .then((response) => response.json())
       .then((data) => setMembers(Array.isArray(data) ? data : []))
       .catch((error) => console.error("Error fetching members:", error));
@@ -20,7 +20,7 @@ const Home = () => {
         (member.apartment && member.apartment.includes(searchTerm)) ||
         (member.email &&
           member.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (member.contact && member.contact.includes(searchTerm)))
+        (member.contact && member.contact.includes(searchTerm))),
   );
 
   return (

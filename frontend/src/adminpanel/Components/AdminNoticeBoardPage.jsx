@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
 
 const AdminNoticeBoardPage = () => {
-  const API_BASE_URL = "http://localhost:4545/api/notices";
+  const API_BASE_URL =
+    "https://apartment-management-system-asf9.onrender.com/api/notices";
   const [notices, setNotices] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editNotice, setEditNotice] = useState(null);
@@ -69,7 +70,7 @@ const AdminNoticeBoardPage = () => {
   const handleSaveNotice = async () => {
     // Show a confirmation dialog
     const isConfirmed = window.confirm(
-      "Are you sure you want to save changes to this notice?"
+      "Are you sure you want to save changes to this notice?",
     );
 
     // Proceed only if the user confirms
@@ -90,8 +91,8 @@ const AdminNoticeBoardPage = () => {
         const data = await response.json();
         setNotices(
           notices.map((notice) =>
-            notice.noticeid === editNotice.noticeid ? data : notice
-          )
+            notice.noticeid === editNotice.noticeid ? data : notice,
+          ),
         ); // Update the state with the edited notice
         handleClose(); // Close the modal
       } catch (error) {
@@ -103,7 +104,7 @@ const AdminNoticeBoardPage = () => {
   const handleDeleteNotice = async (noticeid) => {
     // Show a confirmation dialog
     const isConfirmed = window.confirm(
-      "Are you sure you want to delete this notice?"
+      "Are you sure you want to delete this notice?",
     );
 
     // Proceed only if the user confirms

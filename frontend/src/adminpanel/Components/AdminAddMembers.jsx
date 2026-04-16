@@ -15,10 +15,11 @@ const AdminAddMembers = () => {
     joiningdate: "", // Initialize as empty string
   });
   const [editMember, setEditMember] = useState(null);
-  const apiUrl = "http://localhost:4545/api/members/";
+  const apiUrl =
+    "https://apartment-management-system-asf9.onrender.com/api/members/";
 
   useEffect(() => {
-    fetch("http://localhost:4545/api/members/")
+    fetch("https://apartment-management-system-asf9.onrender.com/api/members/")
       .then((response) => response.json())
       .then((data) => setMembers(Array.isArray(data) ? data : []))
       .catch((error) => console.error("Error fetching members:", error));
@@ -40,70 +41,73 @@ const AdminAddMembers = () => {
     return `${day}/${month}/${year} ${hours}:${minutes}`;
   };
 
-const handleAddMember = async () => {
-  // Validate all required fields
-  const requiredFields = [
-    "name",
-    "apartmentnumber",
-    "contact",
-    "email",
-    "wing",
-    "joiningdate",
-  ];
-  const missingFields = requiredFields.filter(
-    (field) => !newMember[field]?.trim()
-  );
+  const handleAddMember = async () => {
+    // Validate all required fields
+    const requiredFields = [
+      "name",
+      "apartmentnumber",
+      "contact",
+      "email",
+      "wing",
+      "joiningdate",
+    ];
+    const missingFields = requiredFields.filter(
+      (field) => !newMember[field]?.trim(),
+    );
 
-  if (missingFields.length > 0) {
-    toast.error(`Missing required fields: ${missingFields.join(", ")}`);
-    return;
-  }
-
-  try {
-    const payload = {
-      name: newMember.name.trim(),
-      apartmentnumber: newMember.apartmentnumber.trim(),
-      contact: newMember.contact.trim(),
-      email: newMember.email.trim(),
-      wing: newMember.wing.trim(),
-      family_members: newMember.family_members?.trim() || "0",
-      joiningdate: new Date(newMember.joiningdate).toISOString(),
-      status: "Active",
-    };
-
-    const response = await fetch("http://localhost:4545/api/members/", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-
-    const data = await response.json();
-
-    if (!response.ok) {
-      if (data.error && data.error.includes("duplicate key")) {
-        throw new Error("A member with these details already exists");
-      }
-      throw new Error(data.error || `HTTP error! status: ${response.status}`);
+    if (missingFields.length > 0) {
+      toast.error(`Missing required fields: ${missingFields.join(", ")}`);
+      return;
     }
 
-    // Update state
-    setMembers((prev) => [...prev, data]);
-    setNewMember({
-      name: "",
-      apartmentnumber: "",
-      contact: "",
-      email: "",
-      wing: "",
-      family_members: "",
-      joiningdate: "",
-    });
+    try {
+      const payload = {
+        name: newMember.name.trim(),
+        apartmentnumber: newMember.apartmentnumber.trim(),
+        contact: newMember.contact.trim(),
+        email: newMember.email.trim(),
+        wing: newMember.wing.trim(),
+        family_members: newMember.family_members?.trim() || "0",
+        joiningdate: new Date(newMember.joiningdate).toISOString(),
+        status: "Active",
+      };
 
-    toast.success("Member added successfully!");
-  } catch (error) {
-    console.error("Error:", error);
-    toast.error(`Error: ${error.message}`);
-  }
-};
+      const response = await fetch(
+        "https://apartment-management-system-asf9.onrender.com/api/members/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        if (data.error && data.error.includes("duplicate key")) {
+          throw new Error("A member with these details already exists");
+        }
+        throw new Error(data.error || `HTTP error! status: ${response.status}`);
+      }
+
+      // Update state
+      setMembers((prev) => [...prev, data]);
+      setNewMember({
+        name: "",
+        apartmentnumber: "",
+        contact: "",
+        email: "",
+        wing: "",
+        family_members: "",
+        joiningdate: "",
+      });
+
+      toast.success("Member added successfully!");
+    } catch (error) {
+      console.error("Error:", error);
+      toast.error(`Error: ${error.message}`);
+    }
+  };
   const handleSaveEdit = async () => {
     if (!editMember || !editMember.memberid) {
       console.error("Error: Member ID is missing or undefined.");
@@ -128,8 +132,8 @@ const handleAddMember = async () => {
 
       setMembers((prev) =>
         prev.map((member) =>
-          member.memberid === editMember.memberid ? updatedMember : member
-        )
+          member.memberid === editMember.memberid ? updatedMember : member,
+        ),
       );
 
       setEditMember(null);
@@ -159,7 +163,7 @@ const handleAddMember = async () => {
     const confirmUpdate = window.confirm(
       `Are you sure you want to change the status to ${
         currentstatus === "Active" ? "Inactive" : "Active"
-      }?`
+      }?`,
     );
 
     if (!confirmUpdate) {
@@ -182,8 +186,8 @@ const handleAddMember = async () => {
         prev.map((member) =>
           member.memberid === memberId
             ? { ...member, status: newStatus }
-            : member
-        )
+            : member,
+        ),
       );
       console.log("Status updated successfully");
     } catch (error) {
@@ -203,7 +207,7 @@ const handleAddMember = async () => {
         (member.apartment && member.apartment.includes(searchTerm)) ||
         (member.email &&
           member.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
-        (member.contact && member.contact.includes(searchTerm)))
+        (member.contact && member.contact.includes(searchTerm))),
   );
 
   return (

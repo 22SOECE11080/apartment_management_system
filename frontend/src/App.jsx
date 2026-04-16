@@ -5,6 +5,7 @@ import Adminapp from "./adminpanel/Components/Adminapp";
 import ProtectedRoute from "./ProtectedRoute"; // Import the new component
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import "./adminpanel/Assets/css/style.css";
 
 function App() {
   const token = localStorage.getItem("token");

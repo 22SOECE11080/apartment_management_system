@@ -121,17 +121,6 @@ const Sidebar = ({ isSidebarExpanded, toggleSidebar }) => {
             <span>Vehicle Info</span>
           </NavLink>
         </li>
-        <li className="sidebar-item">
-          <NavLink
-            to={adminRoutes.profile}
-            className={({ isActive }) =>
-              `sidebar-link ${isActive ? "active" : ""}`
-            }
-          >
-            <i className="bi bi-person-circle me-2"></i>
-            <span>Profile</span>
-          </NavLink>
-        </li>
       </ul>
       <div className="sidebar-footer">
         <NavLink

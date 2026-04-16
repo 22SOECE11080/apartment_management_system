@@ -9,7 +9,9 @@ const AdminComplaints = () => {
 
   // Fetch complaints from the database
   useEffect(() => {
-    fetch("http://localhost:4545/api/complaints/all") // Adjust API URL
+    fetch(
+      "https://apartment-management-system-asf9.onrender.com/api/complaints/all",
+    ) // Adjust API URL
       .then((response) => response.json())
       .then((data) => setComplaints(data))
       .catch((error) => console.error("Error fetching complaints:", error));
@@ -36,7 +38,7 @@ const AdminComplaints = () => {
 
     // Confirmation dialog
     const isConfirmed = window.confirm(
-      "Are you sure you want to resolve this complaint?"
+      "Are you sure you want to resolve this complaint?",
     );
     if (!isConfirmed) {
       return; // Exit if the user cancels the confirmation
@@ -44,7 +46,7 @@ const AdminComplaints = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4545/api/complaints/${complaintid}/status`,
+        `https://apartment-management-system-asf9.onrender.com/api/complaints/${complaintid}/status`,
         {
           method: "PATCH",
           headers: {
@@ -54,7 +56,7 @@ const AdminComplaints = () => {
             status: "Resolved",
             resolveddate: new Date().toISOString(), // Add resolvedDate
           }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -73,8 +75,8 @@ const AdminComplaints = () => {
                 status: "Resolved",
                 resolveddate: data.resolveddate,
               } // Update status and resolvedDate
-            : complaint
-        )
+            : complaint,
+        ),
       );
     } catch (error) {
       console.error("Error resolving complaint:", error);

@@ -32,12 +32,12 @@ function Booking() {
       }
 
       const response = await fetch(
-        "http://localhost:4545/api/bookings/my-bookings",
+        "https://apartment-management-system-asf9.onrender.com/api/bookings/my-bookings",
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -89,14 +89,17 @@ function Booking() {
     };
 
     try {
-      const response = await fetch("http://localhost:4545/api/bookings", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        "https://apartment-management-system-asf9.onrender.com/api/bookings",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify(bookingData),
         },
-        body: JSON.stringify(bookingData),
-      });
+      );
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -146,13 +149,13 @@ function Booking() {
       const token = localStorage.getItem("token");
 
       const response = await fetch(
-        `http://localhost:4545/api/bookings/${bookingId}`,
+        `https://apartment-management-system-asf9.onrender.com/api/bookings/${bookingId}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {
@@ -273,8 +276,8 @@ function Booking() {
                                   booking.status === "Approved"
                                     ? "bg-success"
                                     : booking.status === "Rejected"
-                                    ? "bg-danger"
-                                    : "bg-warning text-dark"
+                                      ? "bg-danger"
+                                      : "bg-warning text-dark"
                                 }`}
                               >
                                 {booking.status}

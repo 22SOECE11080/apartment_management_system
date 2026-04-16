@@ -44,7 +44,7 @@
                     <hr className="dropdown-divider" />
                   </li>
                   <li>
-                    <a href="/logout" className="dropdown-item text-danger">
+                    <a href="/" className="dropdown-item text-danger">
                       <i className="lni lni-exit me-2"></i> Logout
                     </a>
                   </li>

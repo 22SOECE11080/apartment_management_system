@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
 
 const AdminVehicleInfoPage = () => {
-  const API_BASE_URL = "http://localhost:4545/api/vehicles"; // Replace with your backend URL
+  const API_BASE_URL =
+    "https://apartment-management-system-asf9.onrender.com/api/vehicles"; // Replace with your backend URL
   const [vehicles, setVehicles] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVehicle, setSelectedVehicle] = useState(null);
@@ -52,7 +53,7 @@ const AdminVehicleInfoPage = () => {
     (vehicle) =>
       vehicle.name?.toLowerCase().includes(searchQuery.toLowerCase()) ||
       vehicle.apartmentNumber?.toString().includes(searchQuery) ||
-      vehicle.vehicleType?.toLowerCase().includes(searchQuery.toLowerCase())
+      vehicle.vehicleType?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   // Handle Add Vehicle
@@ -148,8 +149,8 @@ const AdminVehicleInfoPage = () => {
       // Update the state with the updated vehicle
       setVehicles((prevVehicles) =>
         prevVehicles.map((vehicle) =>
-          vehicle.vehicleId === selectedVehicle ? formattedVehicle : vehicle
-        )
+          vehicle.vehicleId === selectedVehicle ? formattedVehicle : vehicle,
+        ),
       );
 
       setShowModal(false);
@@ -176,7 +177,7 @@ const AdminVehicleInfoPage = () => {
         }
 
         setVehicles((prevVehicles) =>
-          prevVehicles.filter((vehicle) => vehicle.vehicleId !== vehicleId)
+          prevVehicles.filter((vehicle) => vehicle.vehicleId !== vehicleId),
         );
         toast.success(`Deleted Vehicle ID: ${vehicleId}`);
       } catch (error) {

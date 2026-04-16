@@ -8,7 +8,9 @@ const NoticeBoard = () => {
   // Fetch notices from the backend
   const fetchNotices = async () => {
     try {
-      const response = await fetch("http://localhost:4545/api/notices");
+      const response = await fetch(
+        "https://apartment-management-system-asf9.onrender.com/api/notices",
+      );
       if (!response.ok) {
         throw new Error("Failed to fetch notices");
       }

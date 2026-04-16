@@ -8,7 +8,8 @@ const Maintenance = () => {
   const [loading, setLoading] = useState(true);
   const [paymentProcessing, setPaymentProcessing] = useState(false);
 
-  const API_BASE = "http://localhost:4545/api/maintenance";
+  const API_BASE =
+    "https://apartment-management-system-asf9.onrender.com/api/maintenance";
 
   const fetchMaintenanceData = useCallback(async () => {
     try {
@@ -122,14 +123,14 @@ const Maintenance = () => {
                   razorpay_signature: response.razorpay_signature,
                   maintenanceId: maintenanceRecord.maintenanceid,
                 }),
-              }
+              },
             );
 
             const verificationData = await verificationResponse.json();
 
             if (!verificationResponse.ok || !verificationData.success) {
               throw new Error(
-                verificationData.error || "Payment verification failed"
+                verificationData.error || "Payment verification failed",
               );
             }
 

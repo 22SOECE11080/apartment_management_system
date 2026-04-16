@@ -8,7 +8,8 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const API = "http://localhost:4545/api/members/";
+  const API =
+    "https://apartment-management-system-asf9.onrender.com/api/members/";
 
   // Fetch data from backend with JWT token
   useEffect(() => {
@@ -61,7 +62,7 @@ function Home() {
     (user) =>
       user.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
       user.apartmentnumber?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      user.wing?.toLowerCase().includes(searchTerm.toLowerCase())
+      user.wing?.toLowerCase().includes(searchTerm.toLowerCase()),
   );
 
   if (loading) {

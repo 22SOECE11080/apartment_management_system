@@ -2,7 +2,7 @@
 // import DataTable from "react-data-table-component";
 
 // const AdminVisitorManagementPage = () => {
-//   const API_BASE_URL = "http://localhost:4545/api/visitors"; // Replace with your backend URL
+//   const API_BASE_URL = "https://apartment-management-system-asf9.onrender.com/api/visitors"; // Replace with your backend URL
 //   const [pendingApprovals, setPendingApprovals] = useState([]);
 //   const [visitorLog, setVisitorLog] = useState([]);
 //   const [newVisitor, setNewVisitor] = useState({
@@ -509,7 +509,8 @@ import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 
 const AdminVisitorManagementPage = () => {
-  const API_BASE_URL = "http://localhost:4545/api/visitors"; // Replace with your backend URL
+  const API_BASE_URL =
+    "https://apartment-management-system-asf9.onrender.com/api/visitors"; // Replace with your backend URL
   const [pendingApprovals, setPendingApprovals] = useState([]);
   const [visitorLog, setVisitorLog] = useState([]);
   const [newVisitor, setNewVisitor] = useState({
@@ -538,7 +539,7 @@ const AdminVisitorManagementPage = () => {
           (visitor) =>
             visitor.status === "Pending Check-In" ||
             visitor.status === "Checked-In" ||
-            visitor.status === "Exited"
+            visitor.status === "Exited",
         );
 
         setPendingApprovals(pending);
@@ -578,12 +579,12 @@ const AdminVisitorManagementPage = () => {
 
       // Update local state immediately
       setPendingApprovals((prevApprovals) =>
-        prevApprovals.filter((visitor) => visitor.visitorid !== visitorid)
+        prevApprovals.filter((visitor) => visitor.visitorid !== visitorid),
       );
 
       setVisitorLog((prevLog) => {
         const approvedVisitor = pendingApprovals.find(
-          (v) => v.visitorid === visitorid
+          (v) => v.visitorid === visitorid,
         );
         if (!approvedVisitor) return prevLog;
 
@@ -603,7 +604,7 @@ const AdminVisitorManagementPage = () => {
 
   const handleReject = async (visitorid) => {
     const isConfirmed = window.confirm(
-      "Are you sure you want to reject this visitor?"
+      "Are you sure you want to reject this visitor?",
     );
     if (!isConfirmed) {
       return; // Exit if the user cancels the confirmation
@@ -623,13 +624,13 @@ const AdminVisitorManagementPage = () => {
       const updatedData = await updatedResponse.json();
 
       const pending = updatedData.filter(
-        (visitor) => visitor.status === "Pending"
+        (visitor) => visitor.status === "Pending",
       );
       const log = updatedData.filter(
         (visitor) =>
           visitor.status === "Pending Check-In" ||
           visitor.status === "Checked-In" ||
-          visitor.status === "Exited"
+          visitor.status === "Exited",
       );
 
       setPendingApprovals(pending);
@@ -662,13 +663,13 @@ const AdminVisitorManagementPage = () => {
       const updatedData = await updatedResponse.json();
 
       const pending = updatedData.filter(
-        (visitor) => visitor.status === "Pending"
+        (visitor) => visitor.status === "Pending",
       );
       const log = updatedData.filter(
         (visitor) =>
           visitor.status === "Pending Check-In" ||
           visitor.status === "Checked-In" ||
-          visitor.status === "Exited"
+          visitor.status === "Exited",
       );
 
       setPendingApprovals(pending);
@@ -701,13 +702,13 @@ const AdminVisitorManagementPage = () => {
       const updatedData = await updatedResponse.json();
 
       const pending = updatedData.filter(
-        (visitor) => visitor.status === "Pending"
+        (visitor) => visitor.status === "Pending",
       );
       const log = updatedData.filter(
         (visitor) =>
           visitor.status === "Pending Check-In" ||
           visitor.status === "Checked-In" ||
-          visitor.status === "Exited"
+          visitor.status === "Exited",
       );
 
       setPendingApprovals(pending);
@@ -753,13 +754,13 @@ const AdminVisitorManagementPage = () => {
       const updatedData = await updatedResponse.json();
 
       const pending = updatedData.filter(
-        (visitor) => visitor.status === "Pending"
+        (visitor) => visitor.status === "Pending",
       );
       const log = updatedData.filter(
         (visitor) =>
           visitor.status === "Pending Check-In" ||
           visitor.status === "Checked-In" ||
-          visitor.status === "Exited"
+          visitor.status === "Exited",
       );
 
       setPendingApprovals(pending);
@@ -879,8 +880,8 @@ const AdminVisitorManagementPage = () => {
                         visitor.status === "Checked-In"
                           ? "success"
                           : visitor.status === "Exited"
-                          ? "secondary"
-                          : "warning"
+                            ? "secondary"
+                            : "warning"
                       }`}
                     >
                       {visitor.status}

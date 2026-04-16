@@ -26,11 +26,14 @@ const AddVisitorPage = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:4545/api/visitors", {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      const response = await fetch(
+        "https://apartment-management-system-asf9.onrender.com/api/visitors",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      });
+      );
 
       if (!response.ok) {
         if (response.status === 401) {
@@ -58,78 +61,81 @@ const AddVisitorPage = () => {
   }, [showVisitorList]);
 
   // Add a new visitor request
-const handleAddVisitorRequest = async (e) => {
-  e.preventDefault();
+  const handleAddVisitorRequest = async (e) => {
+    e.preventDefault();
 
-  // Clear previous errors
-  setError(null);
+    // Clear previous errors
+    setError(null);
 
-  // Validate form
-  if (
-    !newVisitor.visitorName ||
-    !newVisitor.purpose ||
-    !newVisitor.indatetime
-  ) {
-    setError("Please fill all required fields (marked with *)");
-    return;
-  }
-
-  setIsLoading(true);
-
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      navigate("/login");
+    // Validate form
+    if (
+      !newVisitor.visitorName ||
+      !newVisitor.purpose ||
+      !newVisitor.indatetime
+    ) {
+      setError("Please fill all required fields (marked with *)");
       return;
     }
 
-    // Debug: Log the member data from localStorage
-    const memberData = JSON.parse(localStorage.getItem("member"));
-    console.log("Current member data:", memberData);
+    setIsLoading(true);
 
-    const response = await fetch("http://localhost:4545/api/visitors", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
-        visitorname: newVisitor.visitorName,
-        purpose: newVisitor.purpose,
-        contact: newVisitor.contact || null,
-        indatetime: new Date(newVisitor.indatetime).toISOString(),
-        status: "Pending",
-      }),
-    });
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        navigate("/login");
+        return;
+      }
 
-    const data = await response.json();
+      // Debug: Log the member data from localStorage
+      const memberData = JSON.parse(localStorage.getItem("member"));
+      console.log("Current member data:", memberData);
 
-    if (!response.ok) {
-      throw new Error(data.error || "Failed to create visitor");
+      const response = await fetch(
+        "https://apartment-management-system-asf9.onrender.com/api/visitors",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            visitorname: newVisitor.visitorName,
+            purpose: newVisitor.purpose,
+            contact: newVisitor.contact || null,
+            indatetime: new Date(newVisitor.indatetime).toISOString(),
+            status: "Pending",
+          }),
+        },
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Failed to create visitor");
+      }
+
+      // Success - reset form and refresh list
+      setNewVisitor({
+        visitorName: "",
+        purpose: "",
+        contact: "",
+        indatetime: "",
+      });
+
+      await fetchVisitorRequests();
+      setShowVisitorList(true);
+    } catch (error) {
+      console.error("Submission error:", error);
+      setError(error.message);
+
+      // Special handling for apartment number error
+      if (error.message.includes("apartment number")) {
+        setError(`${error.message}. Please contact support.`);
+      }
+    } finally {
+      setIsLoading(false);
     }
-
-    // Success - reset form and refresh list
-    setNewVisitor({
-      visitorName: "",
-      purpose: "",
-      contact: "",
-      indatetime: "",
-    });
-
-    await fetchVisitorRequests();
-    setShowVisitorList(true);
-  } catch (error) {
-    console.error("Submission error:", error);
-    setError(error.message);
-
-    // Special handling for apartment number error
-    if (error.message.includes("apartment number")) {
-      setError(`${error.message}. Please contact support.`);
-    }
-  } finally {
-    setIsLoading(false);
-  }
-};
+  };
 
   // Format date for display
   const formatDate = (dateString) => {
@@ -160,13 +166,13 @@ const handleAddVisitorRequest = async (e) => {
       }
 
       const response = await fetch(
-        `http://localhost:4545/api/visitors/${visitorId}`,
+        `https://apartment-management-system-asf9.onrender.com/api/visitors/${visitorId}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
           },
-        }
+        },
       );
 
       if (!response.ok) {

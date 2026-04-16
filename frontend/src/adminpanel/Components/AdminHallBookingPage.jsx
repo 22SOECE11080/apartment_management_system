@@ -7,7 +7,7 @@ const AdminHallBookingPage = () => {
 
   // Fetch booking requests from the database
   useEffect(() => {
-    fetch("http://localhost:4545/api/bookings") // Adjust API URL
+    fetch("https://apartment-management-system-asf9.onrender.com/api/bookings") // Adjust API URL
       .then((response) => response.json())
       .then((data) => setBookingRequests(data))
       .catch((error) => console.error("Error fetching bookings:", error));
@@ -17,14 +17,14 @@ const AdminHallBookingPage = () => {
   const handleApproval = async (bookingid) => {
     try {
       const response = await fetch(
-        `http://localhost:4545/api/bookings/${bookingid}/status`,
+        `https://apartment-management-system-asf9.onrender.com/api/bookings/${bookingid}/status`,
         {
           method: "PATCH",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ status: "Approved" }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -38,8 +38,8 @@ const AdminHallBookingPage = () => {
         prevRequests.map((request) =>
           request.bookingid === bookingid
             ? { ...request, status: "Approved" }
-            : request
-        )
+            : request,
+        ),
       );
 
       console.log("Booking approved successfully:", updatedBooking);
@@ -52,14 +52,14 @@ const AdminHallBookingPage = () => {
   const handleRejection = async (bookingid) => {
     try {
       const response = await fetch(
-        `http://localhost:4545/api/bookings/${bookingid}`,
+        `https://apartment-management-system-asf9.onrender.com/api/bookings/${bookingid}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ status: "Rejected" }),
-        }
+        },
       );
 
       if (!response.ok) {
@@ -73,8 +73,8 @@ const AdminHallBookingPage = () => {
         prevRequests.map((request) =>
           request.bookingid === bookingid
             ? { ...request, status: "Rejected" }
-            : request
-        )
+            : request,
+        ),
       );
 
       console.log("Booking rejected successfully:", updatedBooking);
@@ -174,8 +174,8 @@ const AdminHallBookingPage = () => {
                         request.status === "Approved"
                           ? "bg-success"
                           : request.status === "Rejected"
-                          ? "bg-danger"
-                          : "bg-warning"
+                            ? "bg-danger"
+                            : "bg-warning"
                       }`}
                     >
                       {request.status}

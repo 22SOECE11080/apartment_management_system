@@ -50,7 +50,7 @@ const ComplaintForm = () => {
   const getImageUrl = (imagePath) => {
     if (!imagePath) return null;
     if (imagePath.startsWith("http")) return imagePath;
-    return `http://localhost:4545/uploads/complaints/${imagePath}`;
+    return `https://apartment-management-system-asf9.onrender.com/uploads/complaints/${imagePath}`;
   };
 
   // Handle image loading errors
@@ -63,11 +63,14 @@ const ComplaintForm = () => {
   // Fetch all complaints for the member
   const fetchMemberComplaints = async () => {
     try {
-      const response = await fetch("http://localhost:4545/api/complaints", {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
+      const response = await fetch(
+        "https://apartment-management-system-asf9.onrender.com/api/complaints",
+        {
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
         },
-      });
+      );
 
       if (!response.ok)
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -90,12 +93,12 @@ const ComplaintForm = () => {
   const fetchComplaintDetails = async (complaintId) => {
     try {
       const response = await fetch(
-        `http://localhost:4545/api/complaints/${complaintId}`,
+        `https://apartment-management-system-asf9.onrender.com/api/complaints/${complaintId}`,
         {
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
-        }
+        },
       );
 
       if (!response.ok)
@@ -117,7 +120,7 @@ const ComplaintForm = () => {
   const handleStatusUpdate = async (complaintId, newStatus) => {
     try {
       const response = await fetch(
-        `http://localhost:4545/api/complaints/${complaintId}/status`,
+        `https://apartment-management-system-asf9.onrender.com/api/complaints/${complaintId}/status`,
         {
           method: "PATCH",
           headers: {
@@ -125,7 +128,7 @@ const ComplaintForm = () => {
             Authorization: `Bearer ${authToken}`,
           },
           body: JSON.stringify({ status: newStatus }),
-        }
+        },
       );
 
       if (!response.ok)
@@ -151,13 +154,13 @@ const ComplaintForm = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:4545/api/complaints/${complaintId}`,
+        `https://apartment-management-system-asf9.onrender.com/api/complaints/${complaintId}`,
         {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${authToken}`,
           },
-        }
+        },
       );
 
       if (!response.ok)
@@ -201,13 +204,16 @@ const ComplaintForm = () => {
         }
       }
 
-      const response = await fetch("http://localhost:4545/api/complaints", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${authToken}`,
+      const response = await fetch(
+        "https://apartment-management-system-asf9.onrender.com/api/complaints",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${authToken}`,
+          },
+          body: formDataToSend,
         },
-        body: formDataToSend,
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json().catch(() => ({}));
@@ -369,7 +375,7 @@ const ComplaintForm = () => {
                                 src={complaint.imageurl}
                                 alt="Complaint"
                                 onError={handleImageError(
-                                  complaint.complaintid
+                                  complaint.complaintid,
                                 )}
                                 style={{
                                   width: "80px",
@@ -455,7 +461,7 @@ const ComplaintForm = () => {
                             onChange={(e) =>
                               handleStatusUpdate(
                                 selectedComplaint.complaintid,
-                                e.target.value
+                                e.target.value,
                               )
                             }
                           >
@@ -488,7 +494,7 @@ const ComplaintForm = () => {
                             borderRadius: "8px",
                           }}
                           onError={handleImageError(
-                            selectedComplaint.complaintid
+                            selectedComplaint.complaintid,
                           )}
                           onLoad={() =>
                             setImageLoading((prev) => ({
